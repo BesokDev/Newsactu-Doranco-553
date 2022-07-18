@@ -32,7 +32,7 @@
                             Espace Admin
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{{ path('show_dashboard') }}">Dashboard</a></li>
                             <li><a class="dropdown-item" href="#">Ajouter un article</a></li>
                             <li><a class="dropdown-item" href="#">Ajouter une catégorie</a></li>
                         </ul>
@@ -45,7 +45,7 @@
 
     {% if app.user %}
 
-{#        <div class="text-nowrap">Vous êtes connecté {{ app.user.firstname }} en tant que : <span class="text-warning"></span></div>#}
+        <div class="text-nowrap">Vous êtes connecté {{ app.user.firstname }} en tant que : <span class="text-warning">{{ app.user.roles | first }}</span></div>
 
     {% endif%}
 </nav>
