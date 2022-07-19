@@ -12,4 +12,48 @@
         </div>
     </div>
 
+    <div class="row mx-auto">
+        <div class="col-4"><a href="{{ path('create_article') }}" class="btn btn-primary">Ajouter un article</a></div>
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-10 mx-auto my-4">
+
+            <h2 class="text-center">Tous les articles</h2>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                    <th>Catégorie</th>
+                    <th>Créé le</th>
+                    <th>Modifié le</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.id }}</td>
+                        <td>{{ article.title | length > 20 ? article.title | slice(0,20) ~ '...' : article.title }}</td>
+                        <td>{{ article.content | length > 20 ? article.content | slice(0,20) ~ '...' : article.content }}</td>
+                        <td>{{ article.category.name }}</td>
+                        <td>{{ article.createdAt | date('d/m/Y') }}</td>
+                        <td>{{ article.updatedAt | date('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ path('update_article', {"id": article.id}) }}" class="text-info" title="Modifier l'article"><i class="fa fa-edit"></i></a>
+                            <a href="" class="text-danger" title="Archiver l'article" onclick="return confirm('Voulez-vous archiver cet article ?')"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
 {% endblock %}
