@@ -4,6 +4,33 @@
 
 {% block body %}
 
+    <div class="row">
+        <div class="col-10 mx-auto my-4">
+            {% include 'include/_flashes.html.twig' %}
+        </div>
+    </div>
+
     <h1 class="text-center my-4">Tous les articles</h1>
+
+    <div class="row">
+        {% for article in articles %}
+
+            <div class="col-3 my-3 mx-2 mx-auto">
+                <div class="card" style="width: 18rem; height: 26rem;">
+
+                    <img width="230" height="130" src="{{ asset('uploads/' ~ article.photo) }}" class="card-img-top img-custom-thumbnail" alt="{{ article.title }}">
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title | length > 20 ? article.title | slice(0,20) ~ '...' : article.title }}</h5>
+                        <h6 class="card-title">{{ article.subtitle | length > 30 ? article.subtitle | slice(0,30) ~ '...' : article.subtitle }}</h6>
+                        <p class="card-text">{{ article.content | length > 50 ? article.content | slice(0,50) ~ '...' : article.content | raw }}</p>
+                        <a href="{{ path('show_article', {'cat_alias': article.category.alias, 'article_alias': article.alias, 'id': article.id}) }}"
+                           class="btn btn-primary d-block mx-auto">Voir l'article</a>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
 
 {% endblock %}
