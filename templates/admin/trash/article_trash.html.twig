@@ -1,27 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tableau de bord{% endblock %}
+{% block title %}Voir la poubelle{% endblock %}
 
 {% block body %}
 
-    <h1 class="text-center my-4">Tableau de Bord</h1>
-
     <div class="row">
-        <div class="col-6 mx-auto">
+        <div class="col-10 mx-auto my-4">
             {% include 'include/_flashes.html.twig' %}
         </div>
     </div>
 
-    <div class="row mx-auto">
-        <div class="col-4"><a href="{{ path('create_article') }}" class="btn btn-primary">Ajouter un article</a></div>
-        <div class="col-4"></div>
-        <div class="col-4"><a href="{{ path('show_trash') }}" class="btn btn-warning"><i class="fa fa-trash"></i> Voir les archives</a></div>
+    <div class="row">
+        <div class="col-12">
+            <i class="fa fa-left-arrow"></i><a href="{{ path('show_dashboard') }}"> Retour au Dashboard</a>
+        </div>
     </div>
 
     <div class="row">
         <div class="col-10 mx-auto my-4">
 
-            <h2 class="text-center">Tous les articles</h2>
+            <h2 class="text-center">Tous les articles archivés</h2>
 
             <table class="table">
                 <thead>
@@ -36,7 +34,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for article in articles %}
+                {% for article in archivedArticles %}
                     <tr>
                         <td>{{ article.id }}</td>
                         <td>{{ article.title | length > 20 ? article.title | slice(0,20) ~ '...' : article.title }}</td>
@@ -45,8 +43,8 @@
                         <td>{{ article.createdAt | date('d/m/Y') }}</td>
                         <td>{{ article.updatedAt | date('d/m/Y') }}</td>
                         <td>
-                            <a href="{{ path('update_article', {"id": article.id}) }}" class="text-info" title="Modifier l'article"><i class="fa fa-edit"></i></a>
-                            <a href="{{ path('soft_delete_article', {'id': article.id}) }}" class="text-danger" title="Archiver l'article" onclick="return confirm('Voulez-vous archiver cet article ?')"><i class="fa fa-trash"></i></a>
+                            <a href="{{ path('restore_article', {"id": article.id}) }}" class="text-info" title="Restaurer l'article"><i class="fa fa-edit"></i></a>
+                            <a href="#" class="text-danger" title="Supprimer définitivement l'article" onclick="return confirm('Voulez-vous archiver cet article ?')"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -105,8 +106,6 @@ class AdminController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
-
-            $article->setCreatedAt(new DateTime());
             $article->setUpdatedAt(new DateTime());
 
             # L'alias sera utilisé dans l'url (comme FranceTvInfo) et donc doit être assaini de tout accents et espaces.
@@ -136,7 +135,7 @@ class AdminController extends AbstractController
                 }
             } else {
                 $article->setPhoto($originalPhoto);
-            }
+            } # end if($photo)
 
             # Ajout d'un auteur à l'article (User récupéré depuis la session)
             $article->setAuthor($this->getUser());
@@ -165,8 +164,35 @@ class AdminController extends AbstractController
         $entityManager->persist($article);
         $entityManager->flush();
 
-        $this->addFlash('success', "L'article a bien été archivé.");
+        $this->addFlash('success', "L'article a bien été archivé");
+        return $this->redirectToRoute('show_dashboard');
+    }# end function softDelete
+
+    /**
+     * @Route("/restaurer-un-article_{id}", name="restore_article", methods={"GET"})
+     */
+    public function restoreArticle(Article $article, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $article->setDeletedAt(null);
+
+        $entityManager->persist($article);
+        $entityManager->flush();
+
+        $this->addFlash('success', "L'article a bien été restauré");
         return $this->redirectToRoute('show_dashboard');
     }
+
+    /**
+     * @Route("/voir-les-articles-archives", name="show_trash", methods={"GET"})
+     */
+    public function showTrash(EntityManagerInterface $entityManager): Response
+    {
+        $archivedArticles = $entityManager->getRepository(Article::class)->findByTrash();
+
+        return $this->render("admin/trash/article_trash.html.twig", [
+            'archivedArticles' => $archivedArticles
+        ]);
+    }
+
 
 } # end class
