@@ -11,8 +11,8 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
-            <i class="fa fa-left-arrow"></i><a href="{{ path('show_dashboard') }}"> Retour au Dashboard</a>
+        <div class="col-12 ms-3">
+            <a href="{{ path('show_dashboard') }}"><i class="fa-solid fa-arrow-left"></i> Retour au Dashboard</a>
         </div>
     </div>
 
@@ -43,9 +43,13 @@
                         <td>{{ article.createdAt | date('d/m/Y') }}</td>
                         <td>{{ article.updatedAt | date('d/m/Y') }}</td>
                         <td>
-                            <a href="{{ path('restore_article', {"id": article.id}) }}" class="text-info" title="Restaurer l'article"><i class="fa fa-edit"></i></a>
-                            <a href="#" class="text-danger" title="Supprimer définitivement l'article" onclick="return confirm('Voulez-vous archiver cet article ?')"><i class="fa fa-trash"></i></a>
+                            <a href="{{ path('restore_article', {"id": article.id}) }}" class="text-info" title="Restaurer l'article"><i class="fa-solid fa-trash-arrow-up"></i></a>
+                            <a href="{{ path('hard_delete_article', {'id': article.id}) }}" class="text-danger" title="Supprimer définitivement l'article" onclick="return confirm('Voulez-vous supprimer définitivement cet article ?')"><i class="fa-solid fa-times-circle"></i></a>
                         </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="bg-warning text-center">Aucun article dans la poubelle</td>
                     </tr>
                 {% endfor %}
                 </tbody>
