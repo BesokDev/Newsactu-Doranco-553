@@ -49,3 +49,22 @@
 
     {% endif%}
 </nav>
+
+<div class="bg-light">
+
+    {#  1ère FACON
+        Lorsque vous n'avez pas de route dans votre action et qu'il n'y a pas de paramètres,
+        on utilisera la fonction Twig render() et la fonction controller().
+        L'appel de l'action se fera de manière statique, et il faudra renseigner le namespace
+        du Controller. Vous DEVREZ mettre 2 back-slash pour cet appel.
+    #}
+{#    {{ render(controller('App\\Controller\\RenderController::renderCategoriesInNav')) }}#}
+
+    {#  2ème FACON
+        Lorsque vous avez une Route sur votre action ET besoin d'ajouter des paramètres,
+        vous pouvez appeller la fonction Twig url() dans la fonction render().
+        Cela fonctionne comme la 1ère façon, le résultat sera identique.
+    #}
+    {{ render(url('render_categories_in_nav')) }}
+
+</div>

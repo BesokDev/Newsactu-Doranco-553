@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Form\ArticleFormType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -226,6 +227,5 @@ class AdminController extends AbstractController
         $this->addFlash('success', "L'article a bien été supprimé de la base de données");
         return $this->redirectToRoute('show_trash');
     }
-
 
 } # end class
