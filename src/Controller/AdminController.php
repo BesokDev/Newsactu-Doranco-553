@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Form\ArticleFormType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -40,9 +41,11 @@ class AdminController extends AbstractController
         }
 
         $articles = $entityManager->getRepository(Article::class)->findBy(['deletedAt' => null]);
+        $categories = $entityManager->getRepository(Category::class)->findAll();
 
         return $this->render("admin/show_dashboard.html.twig", [
             'articles' => $articles,
+            'categories' => $categories
         ]);
     }
 
