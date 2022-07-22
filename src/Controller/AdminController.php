@@ -132,7 +132,6 @@ class AdminController extends AbstractController
 
             # Si une photo a été uploadée dans le formulaire on va faire le traitement nécessaire à son stockage dans notre projet.
             if($photo) {
-
                 # Déconstructioon
                 $extension = '.' . $photo->guessExtension();
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);

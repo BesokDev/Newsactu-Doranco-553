@@ -4,7 +4,11 @@
 
 {% block body %}
 
-    <h1 class="my-4 text-center">Inscription</h1>
+    {% if action is not defined %}
+        <h1 class="my-4 text-center">Inscription</h1>
+    {% else %}
+        <h1 class="my-4 text-center">Changer le mot de passe</h1>
+    {% endif %}
 
     <div class="row">
         <div class="col-6 mx-auto">
