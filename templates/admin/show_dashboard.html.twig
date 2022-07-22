@@ -15,7 +15,7 @@
     <div class="row mx-auto">
         <div class="col-4"><a href="{{ path('create_article') }}" class="btn btn-primary">Ajouter un article</a></div>
         <div class="col-4"></div>
-        <div class="col-4"></div>
+        <div class="col-4"><a href="{{ path('show_trash') }}" class="btn btn-warning"><i class="fa fa-trash"></i> Voir les archives</a></div>
     </div>
 
     <div class="row">
@@ -46,7 +46,7 @@
                         <td>{{ article.updatedAt | date('d/m/Y') }}</td>
                         <td>
                             <a href="{{ path('update_article', {"id": article.id}) }}" class="text-info" title="Modifier l'article"><i class="fa fa-edit"></i></a>
-                            <a href="" class="text-danger" title="Archiver l'article" onclick="return confirm('Voulez-vous archiver cet article ?')"><i class="fa fa-trash"></i></a>
+                            <a href="{{ path('soft_delete_article', {'id': article.id}) }}" class="text-danger" title="Archiver l'article" onclick="return confirm('Voulez-vous archiver cet article ?')"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -54,6 +54,78 @@
             </table>
 
         </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-6">
+
+            <h2 class="text-center">Toutes les catégories</h2>
+
+            <table class="table mx-auto">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Alias</th>
+                    <th>Créée le</th>
+                    <th>Modifiée le</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.alias }}</td>
+                        <td>{{ category.createdAt | date('d/m/Y') }}</td>
+                        <td>{{ category.updatedAt | date('d/m/Y') }}</td>
+                        {% if category.deletedAt is null %}
+                            <td>
+                                <a href="{{ path('update_category', {'id': category.id}) }}"
+                                   class="text-info" title="Modifier la catégorie">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="{{ path('soft_delete_category', {'id': category.id}) }}"
+                                   class="text-danger"
+                                   title="Archiver la catégorie"
+                                   onclick="return confirm('Voulez-vous archiver cette catégorie ?')">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        {% else %}
+                            <td class="bg-warning">
+                                <a href="{{ path('restore_category', {'id': category.id}) }}"
+                                   class="text-primary"
+                                   title="Restaurer la catégorie">
+                                    <i class="fa-solid fa-trash-arrow-up"></i>
+                                </a>
+                                <a href="{{ path('hard_delete_category', {'id': category.id}) }}"
+                                   class="text-danger"
+                                   title="Supprimer définitivement la catégorie"
+                                   onclick="return confirm('Voulez-vous supprimer définitivement cette catégorie ?')">
+                                    <i class="fa fa-times-circle"></i>
+                                </a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="bg-warning">Aucune catégorie dans la base</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+
+        <div class="col-6"></div>
     </div>
 
 {% endblock %}

@@ -1,3 +1,14 @@
 body {
     background-color: lightgray;
 }
+
+.img-custom {
+    height : 600px;
+    object-fit: contain;
+}
+
+.img-custom-thumbnail {
+    width : 18rem;
+    height: 200px;
+    object-fit: cover;
+}

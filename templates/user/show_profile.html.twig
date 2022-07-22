@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon espace perso{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center my-4">Mon espace personnel</h1>
+
+    <div class="row">
+        <div class="col-8 mx-auto">
+            {% include 'include/_flashes.html.twig' %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-10 mx-auto">
+
+            <div class="card text-center">
+                <div class="card-header">
+                    {{ app.user.firstname }} {{ app.user.lastname | capitalize }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Total articles publiés : {{ articles | length }}</h5>
+                    <p class="card-text">Mon email : {{ app.user.email }}</p>
+                    <a href="{{ path('change_password') }}" class="btn btn-warning">Changer mon mot de passe</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Compte crée le : {{ app.user.createdAt | date('d/m/Y') }} | Modifié : {{ app.user.updatedAt | date('d/m/Y') }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
